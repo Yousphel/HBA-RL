@@ -1,0 +1,5 @@
+# ABL-4 (use for hba_rl AND flat_ppo AND baselines): arrival probability 0.6
+seed: 42
+episodes: 2000
+arrival_prob: 0.6
+tag: abl4_p0.6

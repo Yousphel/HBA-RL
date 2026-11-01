@@ -1,0 +1,16 @@
+# Python
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+
+# Data (download Criteo yourself; its licence does not allow redistribution)
+criteo/
+*.txt.gz
+
+# Large training artefacts
+progress_ep*.png
+flat_ppo_progress_ep*.png
+
+
+# Checkpoints (businessAware/**/checkpoint_best.pt) ARE committed (or attach as a release asset) so that
+# `reproduce.sh --quick` can regenerate the tables.

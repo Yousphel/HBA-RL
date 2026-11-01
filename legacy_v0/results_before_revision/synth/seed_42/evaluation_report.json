@@ -1,0 +1,25 @@
+{
+  "seed": 42,
+  "dataset": "synth",
+  "agent": "HBA-RL-PerNode",
+  "training_episodes": 850,
+  "best_train_reward": 30.87311947746524,
+  "routing_counts": [
+    30317.0,
+    30393.0,
+    9841.0,
+    11927.0,
+    12522.0
+  ],
+  "final_metrics": {
+    "avg_reward": 26.332392688676837,
+    "std_reward": 11.648394821817332,
+    "avg_revenue": 16460.84448916872,
+    "avg_cost": 14.553824220439425,
+    "avg_profit": 16446.290664948287,
+    "std_profit": 4697.186921068193,
+    "avg_sla_violations": 0.14,
+    "avg_completions": 26.24,
+    "sla_compliance_rate": 0.993
+  }
+}

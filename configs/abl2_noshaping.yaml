@@ -1,0 +1,5 @@
+# ABL-2: HBA-RL without the routing-shaping term
+seed: 42
+episodes: 2000
+no_shaping: true
+tag: abl2_noshaping

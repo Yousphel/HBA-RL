@@ -1,0 +1,5 @@
+cff-version: 1.2.0
+message: "If you use this code, please cite the HBA-RL manuscript."
+title: "HBA-RL: Hierarchical Business-Aware Reinforcement Learning for E-commerce Cloud ML Workload Scheduling"
+type: software
+license: MIT

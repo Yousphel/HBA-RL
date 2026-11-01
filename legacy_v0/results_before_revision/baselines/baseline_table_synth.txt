@@ -1,0 +1,8 @@
+% Baseline results — SYNTH
+% Columns: Method | Avg Profit±std | Avg Revenue | Avg Cost | SLA% | Violations | Completions
+First-Fit & \$17,543 $\pm$ 4,560 & \$17,555 & \$12 & 100.0\% & 0.0 $\pm$ 0.0 & 26.8 \\
+Best-Fit & \$17,552 $\pm$ 4,535 & \$17,563 & \$11 & 100.0\% & 0.0 $\pm$ 0.0 & 26.8 \\
+Priority-Based & \$17,495 $\pm$ 4,547 & \$17,510 & \$15 & 99.9\% & 0.0 $\pm$ 0.2 & 26.8 \\
+Cost-Aware & \$17,558 $\pm$ 4,542 & \$17,569 & \$10 & 100.0\% & 0.0 $\pm$ 0.0 & 26.8 \\
+SJF & \$17,528 $\pm$ 4,551 & \$17,540 & \$12 & 99.9\% & 0.0 $\pm$ 0.2 & 26.8 \\
+Round-Robin & \$17,563 $\pm$ 4,545 & \$17,574 & \$11 & 100.0\% & 0.0 $\pm$ 0.0 & 26.8 \\

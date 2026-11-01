@@ -1,0 +1,78 @@
+{
+  "mode": "synth",
+  "seeds_found": [
+    7,
+    42,
+    123,
+    456
+  ],
+  "seeds_missing": [],
+  "per_seed": [
+    {
+      "seed": 7,
+      "avg_profit": 17359.926840394073,
+      "std_profit": 4172.83179625016,
+      "avg_revenue": 17389.278402363005,
+      "avg_cost": 29.351561968926056,
+      "avg_sla_violations": 0.22,
+      "sla_compliance_pct": 98.9,
+      "avg_completions": 26.79,
+      "avg_reward": 23.92682669038253,
+      "training_episodes": 750
+    },
+    {
+      "seed": 42,
+      "avg_profit": 16446.290664948287,
+      "std_profit": 4697.186921068193,
+      "avg_revenue": 16460.84448916872,
+      "avg_cost": 14.553824220439425,
+      "avg_sla_violations": 0.14,
+      "sla_compliance_pct": 99.3,
+      "avg_completions": 26.24,
+      "avg_reward": 26.332392688676837,
+      "training_episodes": 850
+    },
+    {
+      "seed": 123,
+      "avg_profit": 17168.228059386965,
+      "std_profit": 4407.137674018002,
+      "avg_revenue": 17183.062356231396,
+      "avg_cost": 14.834296844430101,
+      "avg_sla_violations": 0.1,
+      "sla_compliance_pct": 99.5,
+      "avg_completions": 26.24,
+      "avg_reward": 23.07756516054662,
+      "training_episodes": 750
+    },
+    {
+      "seed": 456,
+      "avg_profit": 16496.391090038825,
+      "std_profit": 4649.926387399727,
+      "avg_revenue": 16511.017687351945,
+      "avg_cost": 14.626597313121394,
+      "avg_sla_violations": 0.09,
+      "sla_compliance_pct": 99.55,
+      "avg_completions": 26.46,
+      "avg_reward": 27.018428651832384,
+      "training_episodes": 2000
+    }
+  ],
+  "mean": {
+    "avg_profit": 16867.709163692038,
+    "avg_revenue": 16886.050733778764,
+    "avg_cost": 18.34157008672924,
+    "avg_sla_violations": 0.13749999999999998,
+    "sla_compliance_pct": 99.3125,
+    "avg_completions": 26.432499999999997,
+    "avg_reward": 25.08880329785959
+  },
+  "std": {
+    "avg_profit": 464.77970080193825,
+    "avg_revenue": 470.07237977011977,
+    "avg_cost": 7.34095652937296,
+    "avg_sla_violations": 0.05909032633745279,
+    "sla_compliance_pct": 0.2954516316872606,
+    "avg_completions": 0.2599198594438939,
+    "avg_reward": 1.8854917184432187
+  }
+}

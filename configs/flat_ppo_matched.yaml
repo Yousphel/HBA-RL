@@ -1,0 +1,5 @@
+# ABL-1: ~283k parameters (hidden 416), categorical node head, shaping, KL 0.05, patience 600 on the 50-episode grid
+seed: 42
+episodes: 2000
+arrival_prob: 0.3
+matched: true

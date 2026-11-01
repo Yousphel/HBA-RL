@@ -1,0 +1,5 @@
+# ABL-3: subgoal g fixed at zero
+seed: 42
+episodes: 2000
+zero_subgoal: true
+tag: abl3_zerosubgoal

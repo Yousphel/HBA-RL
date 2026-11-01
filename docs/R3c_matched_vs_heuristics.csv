@@ -1,0 +1,37 @@
+dataset,comparison,gap,gap_pct,test,p,n_episodes
+criteo,Flat PPO (matched) vs Best-Fit,84.15227896625122,1.4093995087467843,Wilcoxon (paired by episode seed),0.38061003668382276,100
+criteo,Flat PPO (matched) [abl4_p0.6] vs Best-Fit (abl4_p0.6),2711.3605071450975,41.41672279797103,Wilcoxon (paired by episode seed),7.010908510760051e-13,100
+criteo,Flat PPO (matched) [abl4_p0.9] vs Best-Fit (abl4_p0.9),5187.036067524058,112.54468415316992,Wilcoxon (paired by episode seed),7.559735353237344e-17,100
+criteo,Flat PPO (matched) vs Cost-Aware,45.237335598366954,0.7527380996054885,Wilcoxon (paired by episode seed),0.23689486386690062,100
+criteo,Flat PPO (matched) [abl4_p0.6] vs Cost-Aware (abl4_p0.6),2747.3288653587515,42.19799532692283,Wilcoxon (paired by episode seed),7.372352927060524e-13,100
+criteo,Flat PPO (matched) [abl4_p0.9] vs Cost-Aware (abl4_p0.9),5120.860101610315,109.53608155642337,Wilcoxon (paired by episode seed),1.6033960728283034e-16,100
+criteo,Flat PPO (matched) vs First-Fit,48.646131149400304,0.8099190146194626,Wilcoxon (paired by episode seed),0.3006989045676194,100
+criteo,Flat PPO (matched) [abl4_p0.6] vs First-Fit (abl4_p0.6),2741.3908782516473,42.06842129425656,Wilcoxon (paired by episode seed),2.673838131172043e-13,100
+criteo,Flat PPO (matched) [abl4_p0.9] vs First-Fit (abl4_p0.9),5209.241646983668,113.57368461527743,Wilcoxon (paired by episode seed),7.559735353237344e-17,100
+criteo,Flat PPO (matched) vs Priority-Based,-196.60540453404224,-3.1449079138683147,Wilcoxon (paired by episode seed),0.11531352011465917,100
+criteo,Flat PPO (matched) [abl4_p0.6] vs Priority-Based (abl4_p0.6),-467.8933614248508,-4.810852243683902,Wilcoxon (paired by episode seed),0.02325042905695826,100
+criteo,Flat PPO (matched) [abl4_p0.9] vs Priority-Based (abl4_p0.9),912.3291400624294,10.269842212111694,Wilcoxon (paired by episode seed),0.02564982573419698,100
+criteo,Flat PPO (matched) vs Round-Robin,63.463923657051325,1.0592365418729017,Wilcoxon (paired by episode seed),0.41121370964410997,100
+criteo,Flat PPO (matched) [abl4_p0.6] vs Round-Robin (abl4_p0.6),2748.9970023065025,42.23443862181125,Wilcoxon (paired by episode seed),6.027785259387459e-13,100
+criteo,Flat PPO (matched) [abl4_p0.9] vs Round-Robin (abl4_p0.9),5172.14836089355,111.86032645287126,Wilcoxon (paired by episode seed),1.5579198910001613e-16,100
+criteo,Flat PPO (matched) vs SJF,22.50333398994456,0.3730387621530074,Wilcoxon (paired by episode seed),0.060945996147306315,100
+criteo,Flat PPO (matched) [abl4_p0.6] vs SJF (abl4_p0.6),-332.02865301849454,-3.462265460043928,Wilcoxon (paired by episode seed),0.24100890272556064,100
+criteo,Flat PPO (matched) [abl4_p0.9] vs SJF (abl4_p0.9),1476.6477847624162,17.749756870771986,Wilcoxon (paired by episode seed),0.0009179235476966764,100
+synth,Flat PPO (matched) vs Best-Fit,-294.9370587812926,-1.6803215476001412,Wilcoxon (paired by episode seed),5.731195668507818e-13,100
+synth,Flat PPO (matched) [abl4_p0.6] vs Best-Fit (abl4_p0.6),-3555.7840606879663,-10.923654563713324,Wilcoxon (paired by episode seed),3.374048120826996e-16,100
+synth,Flat PPO (matched) [abl4_p0.9] vs Best-Fit (abl4_p0.9),-6227.346831294118,-15.428500408417694,Wilcoxon (paired by episode seed),2.152706086561876e-15,100
+synth,Flat PPO (matched) vs Cost-Aware,-300.7214895792933,-1.7127122996779423,Wilcoxon (paired by episode seed),1.0292226093423223e-13,100
+synth,Flat PPO (matched) [abl4_p0.6] vs Cost-Aware (abl4_p0.6),-3626.190059727977,-11.115904543033517,Wilcoxon (paired by episode seed),1.798758841783531e-16,100
+synth,Flat PPO (matched) [abl4_p0.9] vs Cost-Aware (abl4_p0.9),-6336.027249488256,-15.655606186681212,Wilcoxon (paired by episode seed),3.8895150867593465e-16,100
+synth,Flat PPO (matched) vs First-Fit,-285.7656965423035,-1.628921404052234,Wilcoxon (paired by episode seed),6.3476698383716015e-09,100
+synth,Flat PPO (matched) [abl4_p0.6] vs First-Fit (abl4_p0.6),-3316.489607203427,-10.263976516015646,Wilcoxon (paired by episode seed),8.74112997534717e-17,100
+synth,Flat PPO (matched) [abl4_p0.9] vs First-Fit (abl4_p0.9),-6474.006117222798,-15.94218463526294,Wilcoxon (paired by episode seed),1.200308279272379e-15,100
+synth,Flat PPO (matched) vs Priority-Based,-237.67473341540892,-1.3585174105280484,Wilcoxon (paired by episode seed),5.753156267057694e-07,100
+synth,Flat PPO (matched) [abl4_p0.6] vs Priority-Based (abl4_p0.6),-2630.723347831261,-8.318184911713326,Wilcoxon (paired by episode seed),2.0175487407088173e-16,100
+synth,Flat PPO (matched) [abl4_p0.9] vs Priority-Based (abl4_p0.9),96.3118342437238,0.28294587556976675,Wilcoxon (paired by episode seed),0.7078260175355122,100
+synth,Flat PPO (matched) vs Round-Robin,-305.9478122742727,-1.7419594982041107,Wilcoxon (paired by episode seed),2.8364093447304158e-14,100
+synth,Flat PPO (matched) [abl4_p0.6] vs Round-Robin (abl4_p0.6),-3452.688231453913,-10.640636770185068,Wilcoxon (paired by episode seed),2.0762237175488676e-16,100
+synth,Flat PPO (matched) [abl4_p0.9] vs Round-Robin (abl4_p0.9),-6421.859797751879,-15.834107325904785,Wilcoxon (paired by episode seed),8.108209916205949e-16,100
+synth,Flat PPO (matched) vs SJF,-270.4634544868193,-1.5430415063716298,Wilcoxon (paired by episode seed),1.267216221744908e-08,100
+synth,Flat PPO (matched) [abl4_p0.6] vs SJF (abl4_p0.6),-2502.29228981406,-7.944355148111371,Wilcoxon (paired by episode seed),1.1105191188694949e-14,100
+synth,Flat PPO (matched) [abl4_p0.9] vs SJF (abl4_p0.9),1707.7300575842155,5.266295094983268,Wilcoxon (paired by episode seed),0.0022125636913517266,100

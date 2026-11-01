@@ -1,0 +1,74 @@
+{
+  "First-Fit": {
+    "scheduler": "First-Fit",
+    "avg_profit": 6058.314932308623,
+    "std_profit": 2925.351863839785,
+    "avg_revenue": 6111.020676192219,
+    "avg_cost": 52.705743883596206,
+    "avg_sla_violations": 1.64,
+    "std_sla_violations": 2.295735176365079,
+    "sla_compliance_pct": 94.54968428049186,
+    "avg_completions": 28.45,
+    "std_completions": 4.470738194079362
+  },
+  "Best-Fit": {
+    "scheduler": "Best-Fit",
+    "avg_profit": 5873.344927076895,
+    "std_profit": 2878.4006599693944,
+    "avg_revenue": 5907.482595236517,
+    "avg_cost": 34.137668159619984,
+    "avg_sla_violations": 1.61,
+    "std_sla_violations": 2.1535784174252863,
+    "sla_compliance_pct": 94.66534128561962,
+    "avg_completions": 28.57,
+    "std_completions": 4.665308135589759
+  },
+  "Priority-Based": {
+    "scheduler": "Priority-Based",
+    "avg_profit": 6036.120609867199,
+    "std_profit": 2777.077299507996,
+    "avg_revenue": 6061.4480845862045,
+    "avg_cost": 25.327474719003632,
+    "avg_sla_violations": 1.59,
+    "std_sla_violations": 1.7325992035089939,
+    "sla_compliance_pct": 94.68937875751503,
+    "avg_completions": 28.35,
+    "std_completions": 4.4505617622947335
+  },
+  "Cost-Aware": {
+    "scheduler": "Cost-Aware",
+    "avg_profit": 6183.047536122551,
+    "std_profit": 2695.184806104909,
+    "avg_revenue": 6215.602948519594,
+    "avg_cost": 32.55541239704421,
+    "avg_sla_violations": 1.43,
+    "std_sla_violations": 2.0700483086150427,
+    "sla_compliance_pct": 95.24601063829788,
+    "avg_completions": 28.65,
+    "std_completions": 4.459540335056967
+  },
+  "SJF": {
+    "scheduler": "SJF",
+    "avg_profit": 5973.682734310722,
+    "std_profit": 2541.8392012611735,
+    "avg_revenue": 6002.614399120079,
+    "avg_cost": 28.931664809357883,
+    "avg_sla_violations": 0.86,
+    "std_sla_violations": 1.3116401945655676,
+    "sla_compliance_pct": 97.1314209472982,
+    "avg_completions": 29.12,
+    "std_completions": 4.436845726414206
+  },
+  "Round-Robin": {
+    "scheduler": "Round-Robin",
+    "avg_profit": 5764.2207760474275,
+    "std_profit": 2705.7362813169734,
+    "avg_revenue": 5817.488114505236,
+    "avg_cost": 53.26733845780849,
+    "avg_sla_violations": 1.47,
+    "std_sla_violations": 2.2201576520598714,
+    "sla_compliance_pct": 95.1227604512276,
+    "avg_completions": 28.67,
+    "std_completions": 4.654148686924388
+  }
+}

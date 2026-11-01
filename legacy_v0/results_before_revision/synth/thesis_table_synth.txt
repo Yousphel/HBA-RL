@@ -1,0 +1,11 @@
+% HBA-RL row for thesis results table
+% Columns: Method | Avg Profit±std | Avg Revenue | Avg Cost | SLA% | Violations±std | Completions
+HBA-RL (Ours) & \$16,868 $\pm$ 465 & \$16,886 & \$18 & 99.3\% & 0.1 $\pm$ 0.1 & 26.4 \\
+
+% Raw numbers:
+% Avg Profit:      $16,867.71 ± 464.78
+% Avg Revenue:     $16,886.05
+% Avg Cost:        $18.34
+% SLA Compliance:   99.31% ± 0.30%
+% SLA Violations:   0.14 ± 0.06
+% Avg Completions:  26.43 ± 0.26

@@ -1,0 +1,4 @@
+# Six heuristics, evaluation split, episode seeds 42+e
+episodes: 100
+split: eval
+arrival_prob: 0.3

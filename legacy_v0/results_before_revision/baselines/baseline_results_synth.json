@@ -1,0 +1,74 @@
+{
+  "First-Fit": {
+    "scheduler": "First-Fit",
+    "avg_profit": 17543.246459369377,
+    "std_profit": 4560.413273932826,
+    "avg_revenue": 17555.14559008054,
+    "avg_cost": 11.899130711167613,
+    "avg_sla_violations": 0.0,
+    "std_sla_violations": 0.0,
+    "sla_compliance_pct": 100.0,
+    "avg_completions": 26.8,
+    "std_completions": 4.076763422127902
+  },
+  "Best-Fit": {
+    "scheduler": "Best-Fit",
+    "avg_profit": 17552.41782160836,
+    "std_profit": 4534.590798027974,
+    "avg_revenue": 17562.938568027,
+    "avg_cost": 10.520746418636683,
+    "avg_sla_violations": 0.0,
+    "std_sla_violations": 0.0,
+    "sla_compliance_pct": 100.0,
+    "avg_completions": 26.8,
+    "std_completions": 4.039801975344831
+  },
+  "Priority-Based": {
+    "scheduler": "Priority-Based",
+    "avg_profit": 17495.15549624248,
+    "std_profit": 4547.1927461212845,
+    "avg_revenue": 17510.16556455996,
+    "avg_cost": 15.010068317479261,
+    "avg_sla_violations": 0.04,
+    "std_sla_violations": 0.19595917942265423,
+    "sla_compliance_pct": 99.85069055617768,
+    "avg_completions": 26.75,
+    "std_completions": 4.030818775385467
+  },
+  "Cost-Aware": {
+    "scheduler": "Cost-Aware",
+    "avg_profit": 17558.202252406365,
+    "std_profit": 4542.316895365595,
+    "avg_revenue": 17568.68365042943,
+    "avg_cost": 10.481398023062972,
+    "avg_sla_violations": 0.0,
+    "std_sla_violations": 0.0,
+    "sla_compliance_pct": 100.0,
+    "avg_completions": 26.82,
+    "std_completions": 4.058029078259543
+  },
+  "SJF": {
+    "scheduler": "SJF",
+    "avg_profit": 17527.944217313892,
+    "std_profit": 4551.361424401144,
+    "avg_revenue": 17540.271979138255,
+    "avg_cost": 12.32776182436545,
+    "avg_sla_violations": 0.03,
+    "std_sla_violations": 0.17058722109231983,
+    "sla_compliance_pct": 99.88818486768542,
+    "avg_completions": 26.8,
+    "std_completions": 4.08166632639171
+  },
+  "Round-Robin": {
+    "scheduler": "Round-Robin",
+    "avg_profit": 17563.42857510134,
+    "std_profit": 4544.789590361693,
+    "avg_revenue": 17574.33420087033,
+    "avg_cost": 10.905625768985338,
+    "avg_sla_violations": 0.0,
+    "std_sla_violations": 0.0,
+    "sla_compliance_pct": 100.0,
+    "avg_completions": 26.83,
+    "std_completions": 4.064615602981418
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "seed": 123,
+  "agent": "FlatPPO",
+  "avg_reward": -13.174850234874073,
+  "std_reward": 13.379128804412552,
+  "avg_revenue": 5660.689417757591,
+  "avg_cost": 62.95510738869402,
+  "avg_profit": 5597.734310368898,
+  "sla_compliance": 87.9,
+  "sla_violations": 2.42,
+  "avg_completions": 25.8
+}

@@ -1,0 +1,4 @@
+# Original Flat PPO (unmatched): width 256, continuous node output, no shaping, patience 300 checked every episode
+seed: 42
+episodes: 2000
+arrival_prob: 0.3

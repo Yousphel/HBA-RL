@@ -1,0 +1,4 @@
+# Main HBA-RL run. Override the seed on the command line: --seed 7
+seed: 42
+episodes: 2000
+arrival_prob: 0.3
