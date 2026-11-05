@@ -104,7 +104,7 @@ def fig_training(logs, root, out):
         ds = base.split('_')[0]
         seed = int(base.split('_seed')[-1])
         label = base[len(ds) + 1: base.rindex('_seed')]
-        method = {'HBA_RL': 'HBA-RL', 'Flat_PPO': 'Flat PPO', 'Flat_PPO__matched_': 'Flat PPO (matched)'}.get(label)
+        method = {'HBA_RL': 'HBA-RL', 'Flat_PPO': 'Flat PPO', 'Flat_PPO__matched': 'Flat PPO (matched)'}.get(label)
         if method:
             runs.append((method, ds, seed, d))
     best = {}

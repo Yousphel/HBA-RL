@@ -255,6 +255,13 @@ def main():
     rh = table_vs_heuristics(ep, st, args.hba)
     rh.to_csv(os.path.join(args.out, "R3b_vs_heuristics.csv"), index=False)
     print(rh.round(4).to_string(index=False))
+
+    matched = "Flat PPO (matched)"
+    if matched in set(ep.method):
+        print(f"\n== {matched} vs heuristics (paired by episode seed, same arrival probability) ==")
+        rc = table_vs_heuristics(ep, st, matched)
+        rc.to_csv(os.path.join(args.out, "R3c_matched_vs_heuristics.csv"), index=False)
+        print(rc.round(4).to_string(index=False))
     print(f"\nTables written to {args.out}/")
 
 
