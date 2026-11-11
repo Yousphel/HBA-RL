@@ -32,6 +32,24 @@ N_BOOT = 10_000
 BOOT_SEED = 20261027          # printed, so the bootstrap is reproducible
 
 
+
+def _fmt_p(x):
+    """p-values for printing: below 0.001 -> '< 0.001', otherwise three decimals."""
+    try:
+        x = float(x)
+    except (TypeError, ValueError):
+        return x
+    return "< 0.001" if x < 0.001 else f"{x:.3f}"
+
+
+def show(df, nd=4):
+    """Print-ready copy of a table: rounds numbers and formats every p-value column with _fmt_p."""
+    out = df.round(nd).copy()
+    for c in out.columns:
+        if c == "p" or str(c).startswith("p_") or str(c).endswith("_p"):
+            out[c] = df[c].map(_fmt_p)
+    return out.to_string(index=False)
+
 def load_episodes(logs_dir):
     frames = []
     for f in sorted(glob.glob(os.path.join(logs_dir, "eval_*.csv"))):
@@ -244,24 +262,24 @@ def main():
     table_iqm(ep, rng).to_csv(os.path.join(args.out, "IQM_profit.csv"), index=False)
     pd.set_option("display.width", 250)
     print("\n== R1 main results (profit = revenue - penalties - cost; one SLA formula) ==")
-    print(r1.round(2).to_string(index=False))
+    print(show(r1, 2))
 
     print(f"\n== R3 {args.hba} vs {args.flat} ==")
     r3 = table_r3(ep, st, args.hba, args.flat, rng)
     r3.to_csv(os.path.join(args.out, f"R3_statistical_comparison{suffix}.csv"), index=False)
-    print(r3.round(4).to_string(index=False))
+    print(show(r3, 4))
 
     print(f"\n== {args.hba} vs heuristics (paired by episode seed) ==")
     rh = table_vs_heuristics(ep, st, args.hba)
     rh.to_csv(os.path.join(args.out, "R3b_vs_heuristics.csv"), index=False)
-    print(rh.round(4).to_string(index=False))
+    print(show(rh, 4))
 
     matched = "Flat PPO (matched)"
     if matched in set(ep.method):
         print(f"\n== {matched} vs heuristics (paired by episode seed, same arrival probability) ==")
         rc = table_vs_heuristics(ep, st, matched)
         rc.to_csv(os.path.join(args.out, "R3c_matched_vs_heuristics.csv"), index=False)
-        print(rc.round(4).to_string(index=False))
+        print(show(rc, 4))
     print(f"\nTables written to {args.out}/")
 
 

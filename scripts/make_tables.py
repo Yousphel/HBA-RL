@@ -30,6 +30,24 @@ LEVEL_ROWS = {
 }
 
 
+
+def _fmt_p(x):
+    """p-values for printing: below 0.001 -> '< 0.001', otherwise three decimals."""
+    try:
+        x = float(x)
+    except (TypeError, ValueError):
+        return x
+    return "< 0.001" if x < 0.001 else f"{x:.3f}"
+
+
+def show(df, nd=4):
+    """Print-ready copy of a table: rounds numbers and formats every p-value column with _fmt_p."""
+    out = df.round(nd).copy()
+    for c in out.columns:
+        if c == "p" or str(c).startswith("p_") or str(c).endswith("_p"):
+            out[c] = df[c].map(_fmt_p)
+    return out.to_string(index=False)
+
 def table_r4(logs):
     frames = [pd.read_csv(f) for f in sorted(glob.glob(os.path.join(logs, 'eval_*.csv')))]
     if not frames:
@@ -85,7 +103,7 @@ def table_r6(logs, alpha_note=True):
             b = sm[(sm.dataset == ds) & (sm.method == m)].profit.to_numpy()
             if len(a) < 2 or len(b) < 2:
                 continue
-            t = stats.ttest_ind(a, b, equal_var=False)
+            t = stats.ttest_ind(b, a, equal_var=False)   # variant minus reference, so t has the sign of the gap
             rows.append({'variant': m, 'reference': ref, 'dataset': ds, 'n_seeds': len(b),
                          'profit_mean': b.mean(), 'sd_seed_means': b.std(ddof=1),
                          'reference_mean': a.mean(), 'gap_vs_reference': b.mean() - a.mean(),
@@ -170,7 +188,7 @@ def main():
             continue
         df.to_csv(os.path.join(args.out, f'{name}.csv'), index=False)
         print(f'\n== {name} ==')
-        print(df.round(2).to_string(index=False))
+        print(show(df, 2))
 
 
 if __name__ == '__main__':
