@@ -56,21 +56,14 @@ def provenance(extract):
     print("=" * 70)
     print("PROVENANCE")
     print("=" * 70)
+    print("commit :", run("git rev-parse HEAD"))
+    print("tag    :", run("git describe --tags --always"))
     ok_all = True
-    if os.path.isdir(".git"):
-        print("commit :", run("git rev-parse HEAD"))
-        print("tag    :", run("git describe --tags --always"))
-        dirty = run("git status --porcelain | wc -l")
-        print("dirty  :", dirty, "uncommitted file(s)  (must be 0)")
-        if dirty.isdigit() and int(dirty) > 0:
-            print("         FAIL: commit your changes and tag the commit before you run this")
-            ok_all = False
-    else:   # run from an unpacked copy of the tagged files (no .git folder): commit and tag come from the author
-        c, t = os.environ.get("HBA_COMMIT"), os.environ.get("HBA_TAG")
-        print("commit :", c or "FAIL: no .git folder and HBA_COMMIT not set")
-        print("tag    :", t or "FAIL: no .git folder and HBA_TAG not set")
-        print("note   : no .git folder here; commit and tag were supplied by the author for the files of that tag")
-        ok_all = bool(c and t)
+    dirty = run("git status --porcelain | wc -l")
+    print("dirty  :", dirty, "uncommitted file(s)  (must be 0)")
+    if dirty.isdigit() and int(dirty) > 0:
+        print("         FAIL: commit your changes and tag the commit before you run this")
+        ok_all = False
     if extract and os.path.isfile(extract):
         h = hashlib.sha256()
         with open(extract, "rb") as f:
@@ -103,6 +96,7 @@ def parse_name(path):
     low = rest.lower()
     tag = re.search(r"abl\d+[a-z0-9._]*", low)
     tag = tag.group(0) if tag else ""
+    tag = re.sub(r"p0_(\d)", r"p0.\1", tag)   # p0_6 -> p0.6
     stem = re.sub(r"_+$", "", low.replace(tag, "")) if tag else low
     key = re.sub(r"[^a-z]", "", stem)
     if "hba" in key:
