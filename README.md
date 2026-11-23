@@ -78,7 +78,7 @@ legacy_v0/   superseded scripts and results. Do NOT cite these numbers.
 | R6 ablations ABL-1..4 | scripts/make_tables.py | R6_ablations.csv |
 | M1 hyperparameters | scripts/make_tables.py | M1_hyperparameters.csv |
 | M2 environment parameters | scripts/make_tables.py | M2_environment.csv |
-| M3 attribute statistics, load level | scripts/workload_stats.py | M3_workload_attributes.csv, M3_load_level.csv |
+| M3 attribute statistics, load level | scripts/workload_stats.py | M3_workload_attributes.csv, M3_load_level.csv,M3b_fallback_shares.csv|
 | Fig. 1 architecture | scripts/make_fig1.py | results/figures/fig1_architecture.pdf |
 | Fig. 3 training curves | scripts/make_figures.py | fig3_training_curves.pdf (+ _env) |
 | Fig. 4 profit, all methods | scripts/make_figures.py | fig4_profit.pdf |
