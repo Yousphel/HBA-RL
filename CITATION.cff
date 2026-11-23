@@ -3,3 +3,9 @@ message: "If you use this code, please cite the HBA-RL manuscript."
 title: "HBA-RL: Hierarchical Business-Aware Reinforcement Learning for E-commerce Cloud ML Workload Scheduling"
 type: software
 license: MIT
+authors:
+  - family-names: "El-Alawa"
+    given-names: "Yusif"
+  - family-names: "Osei"
+    given-names: "Eric Opoku"
+    orcid: "https://orcid.org/0000-0002-9871-3900"
