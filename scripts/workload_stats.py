@@ -46,6 +46,29 @@ def collect(env, seeds):
     return pd.DataFrame(rows), pd.DataFrame(loads)
 
 
+FALLBACK_FEATURES = {'I1': 'duration', 'I2': 'value and priority', 'I3': 'penalty ratio',
+                     'I5': 'GPU demand', 'I6': 'CPU demand', 'I7': 'memory demand'}
+
+
+def fallback_shares(criteo_path):
+    """Share of rows in each Criteo split whose feature is zero or missing, so the mapper uses its
+    fallback default instead of the data (same rule as env/criteo.py: missing or non-finite -> 0, then 0 -> fallback).
+    Feeds Table M3b. Computed on the rows of the split, not on the sampled episodes."""
+    from criteo import CriteoLoader
+    out = []
+    for split in ('train', 'eval'):
+        df = CriteoLoader(criteo_path, split=split).load_sample()
+        n = len(df)
+        for col, used_for in FALLBACK_FEATURES.items():
+            x = pd.to_numeric(df[col], errors='coerce').to_numpy(dtype=float)
+            missing = ~np.isfinite(x)
+            zero = np.isfinite(x) & (x == 0)
+            out.append({'split': split, 'feature': col, 'used_for': used_for, 'rows': n,
+                        'pct_missing': 100 * missing.mean(), 'pct_zero': 100 * zero.mean(),
+                        'pct_fallback': 100 * (missing | zero).mean()})
+    return pd.DataFrame(out)
+
+
 def describe(df, dataset, split, bounds):
     out = []
     for a in ATTRS:
@@ -101,6 +124,12 @@ def main():
     print(m3.round(3).to_string(index=False))
     print('\nOffered load (1.0 = cluster fully busy if jobs ran back to back):')
     print(pd.DataFrame(load).round(3).to_string(index=False))
+
+    if args.criteo_path:   # share of rows using the fallback default per split (Table M3b)
+        fb = fallback_shares(args.criteo_path)
+        fb.to_csv(os.path.join(args.out, 'M3b_fallback_shares.csv'), index=False)
+        print('\nShare of Criteo rows that use the fallback default (Table M3b):')
+        print(fb.round(2).to_string(index=False))
 
     if args.criteo_path:   # histograms of the mapped Criteo attributes (support for Table M3)
         import matplotlib
