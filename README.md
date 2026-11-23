@@ -154,4 +154,4 @@ Software: Python 3.13, the pinned versions in `requirements.txt`. The notebooks 
 See `docs/CHANGELOG.md`.
 
 ## Data and code availability
-Code: this repository, private until the paper is accepted and open to the editor and reviewers on request. It will be made public and archived on Zenodo on acceptance. Data: Criteo Display Advertising Challenge (https://kaggle.com/competitions/criteo-display-ad-challenge; not redistributed). `data/make_criteo_extract.py` rebuilds the 200,000-row extract (the first 200,000 rows of `train.txt`) and verifies its SHA-256 (69824b15277d6dd1cfc1bba0ab9e2874f11556942e86fbaaa04a0514c18d9bd0).
+Code: this repository is public. It will be archived on Zenodo when the paper is accepted. Data: Criteo Display Advertising Challenge (https://kaggle.com/competitions/criteo-display-ad-challenge; not redistributed). `data/make_criteo_extract.py` rebuilds the 200,000-row extract (the first 200,000 rows of `train.txt`) and verifies its SHA-256 (69824b15277d6dd1cfc1bba0ab9e2874f11556942e86fbaaa04a0514c18d9bd0).
