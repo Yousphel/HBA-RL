@@ -115,7 +115,7 @@ Individual runs: `python scripts/train_hrl_scheduler.py criteo --config configs/
 HBA-RL and Flat PPO), `--matched` (ABL-1). `--eval-only` re-evaluates a saved `checkpoint_best.pt`.
 `--legacy-shaping` / `--legacy-observation` restore the pre-revision behaviour.
 
-Hardware and run times: Kaggle CPU notebooks, 4 cores; per-run values are in run_config.json and training_summary.json.: filled from `run_config.json` / `training_summary.json` (R5) after the full run.
+Hardware and run times: Kaggle CPU notebooks, 4 cores; per-run values are in run_config.json and training_summary.json.
 
 ## Known differences between HBA-RL and Flat PPO
 
