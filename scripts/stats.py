@@ -173,7 +173,7 @@ def per_episode_profit(ep, ds, m):
 
 
 def table_r3(ep, st, hba, flat, rng):
-    rows, boots = [], {}
+    rows, boots, plug = [], {}, {}
     for ds in sorted(ep.dataset.unique()):
         sh, sf = st[(st.dataset == ds) & (st.method == hba)], st[(st.dataset == ds) & (st.method == flat)]
         if len(sh) < 2 or len(sf) < 2:
@@ -197,14 +197,17 @@ def table_r3(ep, st, hba, flat, rng):
                      "p": wp, "ci95_low": np.nan, "ci95_high": np.nan, "effect_size_d": np.nan,
                      "n_a": len(a), "n_b": len(b)})
         lo, hi = np.percentile(boots[ds], [2.5, 97.5])
-        print(f"  {ds}: profit gap {100 * (sh.profit.mean() - sf.profit.mean()) / sf.profit.mean():.2f}% "
+        plug[ds] = 100 * (sh.profit.mean() - sf.profit.mean()) / sf.profit.mean()   # plug-in gap from the seed means
+        print(f"  {ds}: profit gap {plug[ds]:.2f}% "
               f"(bootstrap 95% CI {lo:.2f}% to {hi:.2f}%)")
     if {"synth", "criteo"} <= set(boots):
         diff = boots["criteo"] - boots["synth"]            # hypothesis P2: gap larger on Criteo
         lo, hi = np.percentile(diff, [2.5, 97.5])
-        print(f"  Interaction (criteo gap minus synth gap, % points): mean {diff.mean():.2f}, 95% CI {lo:.2f} to {hi:.2f}")
+        plugin_diff = plug["criteo"] - plug["synth"]       # reported value: difference of the two printed gaps
+        print(f"  Interaction (criteo gap minus synth gap, % points): plug-in {plugin_diff:.2f}; "
+              f"bootstrap mean {diff.mean():.2f}, 95% CI {lo:.2f} to {hi:.2f} (the bootstrap gives the interval only)")
         rows.append({"comparison": f"{hba} vs {flat}", "dataset": "criteo - synth", "metric": "gap_pct interaction",
-                     "gap": np.nan, "gap_pct": diff.mean(), "test": "independent-seed bootstrap", "statistic": np.nan,
+                     "gap": np.nan, "gap_pct": plugin_diff, "test": "plug-in difference of the two gaps; interval from independent-seed bootstrap", "statistic": np.nan,
                      "df": np.nan, "p": np.nan, "ci95_low": lo, "ci95_high": hi, "effect_size_d": np.nan,
                      "n_a": np.nan, "n_b": np.nan})
     return pd.DataFrame(rows)
