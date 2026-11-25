@@ -26,6 +26,11 @@ import numpy as np
 import pandas as pd
 from scipy import stats
 
+try:
+    from equivalence import holm                  # run as a script from the repo root
+except ImportError:
+    from scripts.equivalence import holm
+
 REQUIRED = ["method", "dataset", "seed", "episode_seed", "revenue", "penalties", "cost", "completed", "violated"]
 OPTIONAL = ["expired", "failed_placements", "mean_cpu_util", "mean_completion_time"]
 N_BOOT = 10_000
@@ -215,7 +220,8 @@ def table_r3(ep, st, hba, flat, rng):
 
 def table_vs_heuristics(ep, st, hba):
     """HBA-RL vs every heuristic at the SAME arrival probability: the nominal-load HBA-RL is paired with the
-    nominal-load heuristics, and HBA-RL [abl4_pX] with the heuristics '(abl4_pX)' (same episode seeds, same load)."""
+    nominal-load heuristics, and HBA-RL [abl4_pX] with the heuristics '(abl4_pX)' (same episode seeds, same load).
+    p_holm: Holm-adjusted p-value; the family is every heuristic comparison (all loads) of one agent on one dataset."""
     rows = []
     for ds in sorted(ep.dataset.unique()):
         methods = set(ep[ep.dataset == ds].method)
@@ -238,7 +244,12 @@ def table_vs_heuristics(ep, st, hba):
             rows.append({"dataset": ds, "comparison": f"{ref} vs {m}", "gap": (x - y).mean(),
                          "gap_pct": 100 * (x - y).mean() / y.mean(), "test": "Wilcoxon (paired by episode seed)",
                          "p": p, "n_episodes": len(x)})
-    return pd.DataFrame(rows)
+    out = pd.DataFrame(rows)
+    if not out.empty:                                  # Holm (1979): one family per dataset and reference agent
+        out["p_holm"] = np.nan
+        for _, idx in out.groupby("dataset").groups.items():
+            out.loc[idx, "p_holm"] = holm(out.loc[idx, "p"].to_numpy())
+    return out
 
 
 def main():

@@ -1,7 +1,7 @@
 """
 Common evaluation protocol (revision 1; fixes A1, A3, D8, D11).
 
-EVERY method (six heuristics, HBA-RL, Flat PPO, matched Flat PPO, ablations) is
+EVERY method (eight heuristics, HBA-RL, Flat PPO, matched Flat PPO, ablations) is
 evaluated by `evaluate()` below:
   * the same environment class and, for Criteo, the same evaluation split;
   * the same 100 episode seeds, 42 + e for e = 0..99;

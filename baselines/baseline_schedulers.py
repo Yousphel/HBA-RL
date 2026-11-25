@@ -1,7 +1,8 @@
 """
-Heuristic baselines (revision 1)
-================================
-Six non-learning schedulers, evaluated by the SAME protocol as the learned agents
+Heuristic baselines (revision 1, elevation: two business-aware rules added)
+=========================================================================
+Eight non-learning schedulers (six simple or load-aware rules, plus the business-aware
+Earliest-Deadline-First and Value-Density rules), evaluated by the SAME protocol as the learned agents
 (evaluation.py): same environment, same Criteo evaluation split, the same 100
 episode seeds (42 + e), unified profit and SLA definitions.
 
@@ -14,8 +15,8 @@ A2/A3/D11  Per-episode logs contain penalties, completed / violated / expired
     counts, failed placements, CPU utilisation and completion time.
 D6  Each scheduler documents job ordering, no-fit behaviour and tie-breaking below.
 
-Common behaviour of all six (D6)
---------------------------------
+Common behaviour of all eight (D6)
+----------------------------------
 * One decision per step: the scheduler picks ONE (job, node) pair, as the agents do.
 * Candidate jobs are scanned in the ORDER STATED for each scheduler; the first
   (job, node) pair that fits (all of CPU, GPU, memory, bandwidth) is submitted.
@@ -77,6 +78,15 @@ class BaselineScheduler:
     def _fits(node, workload) -> bool:
         return all(node.available_resources[r] >= workload.resource_requirements[r]
                    for r in workload.resource_requirements)
+
+    def _first_fit_in_order(self, env, order) -> np.ndarray:
+        """Scan jobs in the given order and nodes 0..4; submit the first (job, node) pair that fits."""
+        for w_idx in order:
+            workload = env.pending_workloads[w_idx]
+            for n_idx, node in enumerate(env.nodes):
+                if self._fits(node, workload):
+                    return self._to_action_array(w_idx, n_idx, 1.0, len(env.pending_workloads), env.num_nodes)
+        return self._fallback(env)
 
     def reset(self):
         """Called at the start of every episode."""
@@ -216,9 +226,44 @@ class RoundRobinScheduler(BaselineScheduler):
         return self._fallback(env)
 
 
+class EDFScheduler(BaselineScheduler):
+    """Earliest-Deadline-First (Liu & Layland, 1973). Job order: remaining time to deadline
+    (workload.deadline, which counts down while the job waits), nearest first. Ties: earlier
+    arrival (Python's stable sort). Node order 0,1,...,4; first job/node that fits wins."""
+    def __init__(self):
+        super().__init__("EDF")
+
+    def get_action(self, env):
+        if not env.pending_workloads:
+            return self._fallback(env)
+        order = sorted(range(len(env.pending_workloads)),
+                       key=lambda i: env.pending_workloads[i].deadline)
+        return self._first_fit_in_order(env, order)
+
+
+class ValueDensityScheduler(BaselineScheduler):
+    """Value-Density. Job order: business value per step of estimated duration
+    (revenue_value / estimated_duration), highest first. Ties: earlier arrival (stable sort).
+    Node order 0,1,...,4; first job/node that fits wins."""
+    def __init__(self):
+        super().__init__("Value-Density")
+
+    @staticmethod
+    def density(workload) -> float:
+        return workload.revenue_value / max(workload.estimated_duration, 1e-9)
+
+    def get_action(self, env):
+        if not env.pending_workloads:
+            return self._fallback(env)
+        order = sorted(range(len(env.pending_workloads)),
+                       key=lambda i: -self.density(env.pending_workloads[i]))
+        return self._first_fit_in_order(env, order)
+
+
 def all_schedulers(num_nodes: int):
     return [FirstFitScheduler(), BestFitScheduler(), PriorityBasedScheduler(),
-            CostAwareScheduler(), SJFScheduler(), RoundRobinScheduler(num_nodes)]
+            CostAwareScheduler(), SJFScheduler(), RoundRobinScheduler(num_nodes),
+            EDFScheduler(), ValueDensityScheduler()]
 
 
 # ==================== Evaluation ====================
@@ -280,9 +325,13 @@ def main():
     parser.add_argument('--tag', type=str, default='', help='Suffix for output files and method labels (ablations)')
     parser.add_argument('--plots', action='store_true', help='also write the legacy bar chart (not used in the paper)')
     parser.add_argument('--log-dir', type=str, default=os.path.join('results', 'logs'))
+    parser.add_argument('--only', type=str, default='',
+                        help='comma-separated scheduler names to run (e.g. "EDF,Value-Density"); default: all eight')
     args = parse_with_config(parser)
 
     tag_sfx = f'_{args.tag}' if args.tag else ''
+    if args.only:
+        tag_sfx += '_subset'      # a subset run never overwrites the full eight-rule summary file
     print(f"\n{'=' * 60}\n  Heuristic baselines | mode={args.mode} | episodes={args.episodes}"
           f" | episode seeds {EVAL_SEED_BASE}..{EVAL_SEED_BASE + args.episodes - 1}"
           f" | arrival_prob={args.arrival_prob}\n{'=' * 60}")
@@ -300,7 +349,12 @@ def main():
         split = 'n/a'
 
     summaries = []
-    for sched in all_schedulers(env.num_nodes):
+    wanted = {x.strip() for x in args.only.split(',') if x.strip()}
+    scheds = [s_ for s_ in all_schedulers(env.num_nodes) if not wanted or s_.name in wanted]
+    if wanted and len(scheds) != len(wanted):
+        known = [s_.name for s_ in all_schedulers(env.num_nodes)]
+        raise SystemExit(f"--only: unknown name in {sorted(wanted)}. Known: {known}")
+    for sched in scheds:
         label = f"{sched.name} ({args.tag})" if args.tag else sched.name
         print(f"\nEvaluating {label} ...")
         df = evaluate(env, sched.act, label, dataset, seed=0, split=split, episodes=args.episodes,

@@ -25,7 +25,7 @@ import pandas as pd
 
 COLORS = {'HBA-RL': '#1f4e79', 'Flat PPO': '#c0504d', 'Flat PPO (matched)': '#e8a13b',
           'First-Fit': '#9bbb59', 'Best-Fit': '#8064a2', 'Priority-Based': '#4bacc6', 'Cost-Aware': '#f79646',
-          'SJF': '#7f7f7f', 'Round-Robin': '#bfbfbf'}
+          'SJF': '#7f7f7f', 'Round-Robin': '#bfbfbf', 'EDF': '#556b2f', 'Value-Density': '#a9b88a'}
 LEARNED = ['HBA-RL', 'Flat PPO', 'Flat PPO (matched)']
 DS_NAME = {'synth': 'Synthetic', 'criteo': 'Criteo evaluation split'}
 plt.rcParams.update({'font.size': 9, 'axes.spines.top': False, 'axes.spines.right': False, 'pdf.fonttype': 42})

@@ -19,6 +19,11 @@ import os
 import numpy as np
 import pandas as pd
 
+try:
+    from equivalence import tost                  # run as a script from the repo root
+except ImportError:
+    from scripts.equivalence import tost
+
 AGENTS = ['HBA-RL', 'Flat PPO', 'Flat PPO (matched)']
 
 # Architecture rows that differ between the macro and the micro networks of HBA-RL (read from hrl_agent.py).
@@ -79,7 +84,8 @@ def table_r5(root):
 
 
 def table_r6(logs, alpha_note=True):
-    """Ablations (ABL-1..4): variant vs the matching HBA-RL reference; Welch t on seed means."""
+    """Ablations (ABL-1..4): variant vs the matching HBA-RL reference; Welch t on seed means, plus the
+    equivalence test (TOST, 90% Welch CI inside +/- the margin set in equivalence.py)."""
     from scipy import stats
     frames = [pd.read_csv(f) for f in sorted(glob.glob(os.path.join(logs, 'eval_*.csv')))]
     if not frames:
@@ -104,10 +110,15 @@ def table_r6(logs, alpha_note=True):
             if len(a) < 2 or len(b) < 2:
                 continue
             t = stats.ttest_ind(b, a, equal_var=False)   # variant minus reference, so t has the sign of the gap
+            eq = tost(b, a)                               # equivalence (TOST), margin set in equivalence.py
             rows.append({'variant': m, 'reference': ref, 'dataset': ds, 'n_seeds': len(b),
                          'profit_mean': b.mean(), 'sd_seed_means': b.std(ddof=1),
                          'reference_mean': a.mean(), 'gap_vs_reference': b.mean() - a.mean(),
-                         'gap_pct': 100 * (b.mean() - a.mean()) / a.mean(), 'welch_t': t.statistic, 'p': t.pvalue})
+                         'gap_pct': 100 * (b.mean() - a.mean()) / a.mean(), 'welch_t': t.statistic, 'p': t.pvalue,
+                         'ci90_low': eq['ci90_low'], 'ci90_high': eq['ci90_high'],
+                         'eq_margin': eq['margin'], 'eq_margin_pct': eq['margin_pct'],
+                         'p_tost': eq['p_tost'],
+                         'tost_verdict': 'equivalent' if eq['equivalent'] else 'not shown equivalent'})
     return pd.DataFrame(rows)
 
 

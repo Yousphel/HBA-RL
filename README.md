@@ -1,10 +1,10 @@
 # HBA-RL: Hierarchical Business-Aware Reinforcement Learning for E-commerce Cloud ML Workload Scheduling
 
-This repository contains the experimental code used to train, ablate, and benchmark **HBA-RL**, a two-level hierarchical PPO scheduler for machine-learning workloads on shared cloud infrastructure. A single macro-level PPO policy issues a 12-dimensional business subgoal (priority, resource, and SLA components) and a discrete routing decision assigning each incoming job to one of the five server nodes; the micro-level PPO policy at that node consumes the subgoal and decides a 2-dimensional action: which queued job to admit, and a resource-allocation fraction. The framework is evaluated against six heuristic baselines and a single-level ("Flat") PPO ablation, on both a synthetic workload generator and the real-world Criteo Display Advertising dataset.
+This repository contains the experimental code used to train, ablate, and benchmark **HBA-RL**, a two-level hierarchical PPO scheduler for machine-learning workloads on shared cloud infrastructure. A single macro-level PPO policy issues a 12-dimensional business subgoal (priority, resource, and SLA components) and a discrete routing decision assigning each incoming job to one of the five server nodes; the micro-level PPO policy at that node consumes the subgoal and decides a 2-dimensional action: which queued job to admit, and a resource-allocation fraction. The framework is evaluated against eight heuristic baselines (six simple rules plus Earliest-Deadline-First and Value-Density) and a single-level ("Flat") PPO ablation, on both a synthetic workload generator and the real-world Criteo Display Advertising dataset.
 
 ## Question being tested
 
-Does a hierarchical decomposition improve business-aware scheduling, once capacity, reward shaping and training settings are matched? HBA-RL is compared with six heuristics and with Flat PPO (original and matched, ABL-1) on a synthetic generator and on Criteo-derived workloads. The Criteo mapping is an arbitrary fixed assignment, not real cloud workloads. The two agents differ in several respects, listed in [Known differences](#known-differences-between-hba-rl-and-flat-ppo).
+Does a hierarchical decomposition improve business-aware scheduling, once capacity, reward shaping and training settings are matched? HBA-RL is compared with eight heuristics and with Flat PPO (original and matched, ABL-1) on a synthetic generator and on Criteo-derived workloads. The Criteo mapping is an arbitrary fixed assignment, not real cloud workloads. The two agents differ in several respects, listed in [Known differences](#known-differences-between-hba-rl-and-flat-ppo).
 
 ## Architecture
 
@@ -54,11 +54,13 @@ Points to know when reading the code:
 ```
 env/         hrl_scheduler_simulation.py (Gymnasium environment), criteo.py (Criteo -> job-attribute mapping)
 agents/      hrl_agent.py (HBA-RL; ABL-3 zero subgoal), flat_ppo.py (Flat PPO; ABL-1 matched variant)
-baselines/   baseline_schedulers.py (six heuristics, one class each; also the CLI that evaluates them)
+baselines/   baseline_schedulers.py (eight heuristics, one class each; also the CLI that evaluates them)
 configs/     one YAML per experiment (hba_rl, flat_ppo, flat_ppo_matched, abl2, abl3, abl4_p0.6, abl4_p0.9, baselines)
 data/        make_criteo_extract.py, criteo_extract.sha256 (written by the script)
 scripts/     train_hrl_scheduler.py, train_flat_ppo.py, eval_all.py, stats.py, make_tables.py, make_figures.py,
-             make_fig1.py, workload_stats.py
+             make_fig1.py, workload_stats.py, equivalence.py (TOST and Holm; the equivalence margin is set here),
+             run_elevation.sh (new heuristics at three loads, then all tables)
+tests/       test_elevation.py (python -m unittest tests/test_elevation.py -v)
 businessAware/**/checkpoint_best.pt, run_config.json, training_summary.json   (checkpoints: commit or release asset)
 results/     logs/ (per-episode CSV, every method), tables/, figures/, reproduction_log.txt
 common.py, evaluation.py, seed_utils.py   shared modules (constants, env factory, evaluation routine, seeding)
@@ -72,10 +74,10 @@ legacy_v0/   superseded scripts and results. Do NOT cite these numbers.
 |---|---|---|
 | R1a/b main results (both SD columns) | scripts/stats.py | results/tables/R1_main_results.csv |
 | R2 per-seed results (with stop episode) | stats.py + make_tables.py | R2_per_seed.csv |
-| R3 statistical comparison; IQM CIs | scripts/stats.py | R3_statistical_comparison.csv, R3b_vs_heuristics.csv, IQM_profit.csv |
+| R3 statistical comparison; IQM CIs; Holm-adjusted p (p_holm) against the heuristics | scripts/stats.py | R3_statistical_comparison.csv, R3b_vs_heuristics.csv, IQM_profit.csv |
 | R4 routing share (evaluation only) | scripts/make_tables.py | R4_routing_share.csv |
 | R5 training behaviour | scripts/make_tables.py | R5_training_behaviour.csv |
-| R6 ablations ABL-1..4 | scripts/make_tables.py | R6_ablations.csv |
+| R6 ablations ABL-1..4, with the equivalence test (90% CI, margin, p_tost, tost_verdict) | scripts/make_tables.py, scripts/equivalence.py | R6_ablations.csv |
 | M1 hyperparameters | scripts/make_tables.py | M1_hyperparameters.csv |
 | M2 environment parameters | scripts/make_tables.py | M2_environment.csv |
 | M3 attribute statistics, load level | scripts/workload_stats.py | M3_workload_attributes.csv, M3_load_level.csv,M3b_fallback_shares.csv|
@@ -94,6 +96,8 @@ legacy_v0/   superseded scripts and results. Do NOT cite these numbers.
 * **SLA compliance = 1 - (late + expired) / (on-time + late + expired).**
 * Per-episode logs: `results/logs/eval_<dataset>_<method>_seed<N>.csv` (revenue, penalties, cost, profit, counts, reward components, routing counts, offered load). Every table is computed from these files only.
 * Reported: both SDs (across episodes within a seed, and across seed means), Welch t on seed means, paired Wilcoxon on per-episode profit, stratified-bootstrap IQM CIs.
+* Equivalence (R6): two one-sided Welch tests on seed means. A variant counts as equivalent to HBA-RL when the 90% CI of the gap lies inside +/-2% of HBA-RL mean profit. The margin was set after the main results were seen. It is defined once, in `scripts/equivalence.py`.
+* Multiple comparisons (R3b, R3c): Holm adjustment over every heuristic comparison of one agent on one dataset (8 rules x 3 loads = 24 tests).
 * Training seeds are `10_000_000 + seed*100_000 + episode`, so they cannot collide with the evaluation seeds.
 
 ## Running
