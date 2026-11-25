@@ -1,0 +1,10 @@
+{
+  "source_file": "train.txt",
+  "rule": "first 200000 rows of train.txt, file order",
+  "rows": 200000,
+  "train_rows": 160000,
+  "eval_rows": 40000,
+  "click_rate_train_pct": 23.739,
+  "click_rate_eval_pct": 26.758,
+  "sha256": "69824b15277d6dd1cfc1bba0ab9e2874f11556942e86fbaaa04a0514c18d9bd0"
+}

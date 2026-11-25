@@ -158,11 +158,12 @@ Software: Python 3.13, the pinned versions in `requirements.txt`. The notebooks 
 See `docs/CHANGELOG.md`.
 
 ## Data and code availability
-Code: this repository is public. It will be archived on Zenodo when the paper is accepted. Data: Criteo Display Advertising Challenge (https://kaggle.com/competitions/criteo-display-ad-challenge; not redistributed). `data/make_criteo_extract.py` rebuilds the 200,000-row extract (the first 200,000 rows of `train.txt`) and verifies its SHA-256 (69824b15277d6dd1cfc1bba0ab9e2874f11556942e86fbaaa04a0514c18d9bd0).
+Code: this repository is public. It will be archived on Zenodo when the paper is accepted. Data: Criteo Display Advertising Challenge, released by Criteo for academic use under CC BY-NC-SA 4.0 (https://ailab.criteo.com/kaggle-contest-dataset-now-available-academic-use/; not redistributed). `data/make_criteo_extract.py` rebuilds the 200,000-row extract (the first 200,000 rows of `train.txt`) and verifies its SHA-256 (69824b15277d6dd1cfc1bba0ab9e2874f11556942e86fbaaa04a0514c18d9bd0).
 
 ```
-Results bundle (attached to release v1.1-revision3.1), SHA-256:
+Results bundle (attached to releases v1.1-revision3.1 and v1.2-submission), SHA-256:
 run1_synthetic_output.zip  d5bb5fb415deb5231f708ffc089ced2ec96fd6913fb375e93d794845133878ee
 run2_criteo_output.zip     d9222d796dfaa7a3ad485875ab49718c39527cb0238381c0452639ffbc504013
 abl4_ablations_output.zip  38c9a88761b6e393a49b3a4d6296299577e79b29a164e5d728e472a9316feccb
+elevation_outputs.zip      d4ca8a2091966ed1d456a1eb918d8dd5c8e707bd2c5cb8e16ff6fa0cf5ffdb0f  (release v1.2-submission only)
 ```
